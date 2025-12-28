@@ -1,0 +1,134 @@
+.taskRow {
+  border-bottom: 1px solid #DCE1E5;
+}
+
+.taskRow:hover {
+  background-color: #F5F5F5;
+}
+
+.taskRow td {
+  padding: 16px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.taskRow td:first-child {
+  padding-left: 0;
+  width: 40px;
+}
+
+.taskRow td:last-child {
+  text-align: right;
+  padding-right: 0;
+}
+
+.taskName {
+  font-weight: 400;
+  color: #000000;
+  font-size: 14px;
+}
+
+.dueDate {
+  color: #70797F;
+  font-size: 14px;
+}
+
+.note {
+  color: #70797F;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actionButton:hover {
+  background-color: #E5E5E5;
+}
+
+@media (max-width: 768px) {
+  .taskRow td {
+    padding: 12px 8px;
+  }
+
+  .taskRow td:first-child {
+    padding-left: 0;
+  }
+
+  .taskRow td:last-child {
+    padding-right: 0;
+  }
+
+  .taskName {
+    font-size: 13px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dueDate {
+    font-size: 12px;
+  }
+
+  .note {
+    font-size: 12px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .actionButton {
+    font-size: 16px;
+    padding: 4px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .taskRow td {
+    padding: 10px 6px;
+  }
+
+  .taskRow td:first-child {
+    padding-left: 0;
+  }
+
+  .taskRow td:last-child {
+    padding-right: 0;
+  }
+
+  .taskName {
+    font-size: 12px;
+    max-width: 120px;
+  }
+
+  .dueDate,
+  .note {
+    font-size: 11px;
+  }
+
+  .actionButton {
+    font-size: 14px;
+    padding: 2px 4px;
+  }
+}

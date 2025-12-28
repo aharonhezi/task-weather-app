@@ -1,0 +1,24 @@
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.low {
+  background-color: #DCE1E5;
+  color: #000000;
+}
+
+.medium {
+  background-color: #FFD700;
+  color: #000000;
+}
+
+.high {
+  background-color: #FF69B4;
+  color: #FFFFFF;
+}
+

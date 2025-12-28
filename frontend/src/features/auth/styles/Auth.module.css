@@ -1,0 +1,187 @@
+.container {
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  padding: 24px;
+}
+
+.branding {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+.content {
+  display: flex;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+}
+
+.formContainer {
+  background: white;
+  padding: 48px;
+  border-radius: 12px;
+  box-shadow: none;
+  width: 100%;
+  max-width: 450px;
+}
+
+.welcome {
+  margin-bottom: 32px;
+}
+
+.welcome h2 {
+  font-size: 32px;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.welcome p {
+  font-size: 18px;
+  color: #000000;
+}
+
+.welcome strong {
+  font-size: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgotLink {
+  color: #00C495;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 14px;
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+}
+
+.linkContainer {
+  text-align: center;
+  color: #70797F;
+  font-size: 14px;
+}
+
+.linkContainer a {
+  color: #00C495;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkContainer a:hover {
+  text-decoration: underline;
+}
+
+.illustration {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+}
+
+.illustrationImage {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  object-fit: contain;
+}
+
+@media (max-width: 968px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .illustration {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .formContainer {
+    padding: 32px 24px;
+  }
+
+  .welcome h2 {
+    font-size: 28px;
+  }
+
+  .welcome p {
+    font-size: 16px;
+  }
+
+  .welcome strong {
+    font-size: 20px;
+  }
+
+  .form {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .branding {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .formContainer {
+    padding: 24px 16px;
+    border-radius: 8px;
+  }
+
+  .welcome {
+    margin-bottom: 24px;
+  }
+
+  .welcome h2 {
+    font-size: 24px;
+  }
+
+  .welcome p {
+    font-size: 14px;
+  }
+
+  .welcome strong {
+    font-size: 18px;
+  }
+
+  .form {
+    gap: 16px;
+  }
+}

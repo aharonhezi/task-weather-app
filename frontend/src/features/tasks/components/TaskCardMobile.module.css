@@ -1,0 +1,103 @@
+.card {
+  background: white;
+  border-bottom: 1px solid #DCE1E5;
+  padding: 16px 0;
+}
+
+.card:last-child {
+  border-bottom: none;
+}
+
+.cardContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.checkboxWrapper {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.taskInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-right: 60px;
+}
+
+.taskName {
+  font-weight: 400;
+  color: #000000;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.dueDate {
+  color: #70797F;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.note {
+  color: #70797F;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.tagWrapper {
+  margin-top: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actionButton:hover {
+  background-color: #E5E5E5;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 12px 0;
+  }
+
+  .taskName {
+    font-size: 13px;
+  }
+
+  .dueDate,
+  .note {
+    font-size: 11px;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .actionButton {
+    font-size: 16px;
+    padding: 4px 6px;
+  }
+}
+
