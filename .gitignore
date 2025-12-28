@@ -5,6 +5,7 @@ node_modules/
 dist/
 backend/dist/
 frontend/dist/
+.playwright-mcp/
 
 
 
