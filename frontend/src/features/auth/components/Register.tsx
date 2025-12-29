@@ -1,41 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../../../shared/components/common/Button';
 import { Input } from '../../../shared/components/common/Input';
+import { useRegisterForm } from '../hooks/useRegisterForm';
 import illustration from '../../../assets/task-management-illustration.svg';
 import styles from '../styles/Auth.module.css';
 
 const Register: React.FC = () => {
-  const navigate = useNavigate();
-  const { register } = useAuth();
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      await register(email, username, password);
-      navigate('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    email,
+    username,
+    password,
+    confirmPassword,
+    error,
+    isLoading,
+    setEmail,
+    setUsername,
+    setPassword,
+    setConfirmPassword,
+    handleSubmit,
+  } = useRegisterForm();
 
   return (
     <div className={styles.container}>

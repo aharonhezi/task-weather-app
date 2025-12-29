@@ -1,78 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Header } from '../shared/components/layout/Header';
 import { Button } from '../shared/components/common/Button';
 import { TaskCard } from '../features/tasks/components/TaskCard';
 import { TaskCardMobile } from '../features/tasks/components/TaskCardMobile';
 import { TaskForm } from '../features/tasks/components/TaskForm';
 import { TaskProvider, useTasks } from '../features/tasks/context/TaskContext';
-import { SnackbarProvider, useSnackbar } from '../shared/context/SnackbarContext';
-import { Task } from '../features/tasks/services/taskService';
-import { getErrorMessage } from '../shared/utils/errorMessages';
+import { SnackbarProvider } from '../shared/context/SnackbarContext';
+import { useTaskHandlers } from '../features/tasks/hooks/useTaskHandlers';
 import styles from './Dashboard.module.css';
 
 const DashboardContent: React.FC = () => {
   const {
     tasksToDo,
     tasksDone,
-    addTask,
-    updateTaskById,
-    deleteTaskById,
-    toggleTaskById,
     isLoading,
     error,
     fetchTasks,
   } = useTasks();
-  const { showSnackbar } = useSnackbar();
 
-  const [showTaskForm, setShowTaskForm] = useState(false);
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
-
-  const handleAddTask = async (data: any) => {
-    try {
-      await addTask(data);
-      setShowTaskForm(false);
-      showSnackbar('Task created successfully!', 'success');
-    } catch (error: any) {
-      const message = error.userMessage || getErrorMessage(error);
-      showSnackbar(message, 'error');
-    }
-  };
-
-  const handleEditTask = async (data: any) => {
-    if (editingTask) {
-      try {
-        await updateTaskById(editingTask.id, data);
-        setEditingTask(null);
-        setShowTaskForm(false);
-        showSnackbar('Task updated successfully!', 'success');
-      } catch (error: any) {
-        const message = error.userMessage || getErrorMessage(error);
-        showSnackbar(message, 'error');
-      }
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      try {
-        await deleteTaskById(id);
-        showSnackbar('Task deleted successfully!', 'success');
-      } catch (error: any) {
-        const message = error.userMessage || getErrorMessage(error);
-        showSnackbar(message, 'error');
-      }
-    }
-  };
-
-  const handleToggle = async (id: string) => {
-    try {
-      await toggleTaskById(id);
-      showSnackbar('Task status updated!', 'success');
-    } catch (error: any) {
-      const message = error.userMessage || getErrorMessage(error);
-      showSnackbar(message, 'error');
-    }
-  };
+  const {
+    showTaskForm,
+    editingTask,
+    openAddTaskForm,
+    openEditTaskForm,
+    closeTaskForm,
+    handleAddTask,
+    handleEditTask,
+    handleDelete,
+    handleToggle,
+  } = useTaskHandlers();
 
   return (
     <div className={styles.dashboard}>
@@ -82,10 +38,7 @@ const DashboardContent: React.FC = () => {
           <h1 className={styles.title}>My Tasks for the next month</h1>
           <Button
             variant="primary"
-            onClick={() => {
-              setEditingTask(null);
-              setShowTaskForm(true);
-            }}
+            onClick={openAddTaskForm}
             className={styles.addButton}
           >
             + Add task
@@ -135,10 +88,7 @@ const DashboardContent: React.FC = () => {
                         key={task.id}
                         task={task}
                         onToggle={handleToggle}
-                        onEdit={(task) => {
-                          setEditingTask(task);
-                          setShowTaskForm(true);
-                        }}
+                        onEdit={openEditTaskForm}
                         onDelete={handleDelete}
                       />
                     ))
@@ -155,10 +105,7 @@ const DashboardContent: React.FC = () => {
                     key={task.id}
                     task={task}
                     onToggle={handleToggle}
-                    onEdit={(task) => {
-                      setEditingTask(task);
-                      setShowTaskForm(true);
-                    }}
+                    onEdit={openEditTaskForm}
                     onDelete={handleDelete}
                   />
                 ))
@@ -195,10 +142,7 @@ const DashboardContent: React.FC = () => {
                         key={task.id}
                         task={task}
                         onToggle={handleToggle}
-                        onEdit={(task) => {
-                          setEditingTask(task);
-                          setShowTaskForm(true);
-                        }}
+                        onEdit={openEditTaskForm}
                         onDelete={handleDelete}
                       />
                     ))
@@ -215,10 +159,7 @@ const DashboardContent: React.FC = () => {
                     key={task.id}
                     task={task}
                     onToggle={handleToggle}
-                    onEdit={(task) => {
-                      setEditingTask(task);
-                      setShowTaskForm(true);
-                    }}
+                    onEdit={openEditTaskForm}
                     onDelete={handleDelete}
                   />
                 ))
@@ -232,10 +173,7 @@ const DashboardContent: React.FC = () => {
         <TaskForm
           task={editingTask}
           onSave={editingTask ? handleEditTask : handleAddTask}
-          onCancel={() => {
-            setShowTaskForm(false);
-            setEditingTask(null);
-          }}
+          onCancel={closeTaskForm}
         />
       )}
     </div>
