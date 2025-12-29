@@ -47,7 +47,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const newTask = await createTask(data);
       setTasks((prev) => [...prev, newTask]);
-      setError(null); // Clear error on success
+      setError(null);
     } catch (err: any) {
       const message = err.userMessage || getErrorMessage(err);
       setError(message);
@@ -59,7 +59,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const updatedTask = await updateTask(id, data);
       setTasks((prev) => prev.map((task) => (task.id === id ? updatedTask : task)));
-      setError(null); // Clear error on success
+      setError(null);
     } catch (err: any) {
       const message = err.userMessage || getErrorMessage(err);
       setError(message);
@@ -71,7 +71,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       await deleteTask(id);
       setTasks((prev) => prev.filter((task) => task.id !== id));
-      setError(null); // Clear error on success
+      setError(null);
     } catch (err: any) {
       const message = err.userMessage || getErrorMessage(err);
       setError(message);
@@ -83,7 +83,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const updatedTask = await toggleTask(id);
       setTasks((prev) => prev.map((task) => (task.id === id ? updatedTask : task)));
-      setError(null); // Clear error on success
+      setError(null);
     } catch (err: any) {
       const message = err.userMessage || getErrorMessage(err);
       setError(message);

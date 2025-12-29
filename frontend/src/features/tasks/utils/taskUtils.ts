@@ -22,7 +22,7 @@ export const getWeatherDisplay = (task: Task): { temperature: number; icon?: str
   if (temp !== null && temp !== undefined) {
     return {
       temperature: temp,
-      icon: task.weatherData.icon, // Icon URL from WeatherAPI.com
+      icon: task.weatherData.icon,
     };
   }
   return null;

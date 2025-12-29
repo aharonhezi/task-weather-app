@@ -1,8 +1,4 @@
-/**
- * Extracts user-friendly error messages from API errors
- */
 export const getErrorMessage = (error: any): string => {
-  // Network errors (no response from server)
   if (!error.response) {
     if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
       return 'Request timed out. Please try again.';
@@ -16,7 +12,6 @@ export const getErrorMessage = (error: any): string => {
     return 'Network error. Please check your connection and try again.';
   }
 
-  // Backend validation errors (field-level)
   if (error.response?.data?.errors && typeof error.response.data.errors === 'object') {
     const errors = error.response.data.errors;
     const firstError = Object.values(errors)[0];
@@ -26,12 +21,10 @@ export const getErrorMessage = (error: any): string => {
     return 'Please check the form for errors.';
   }
 
-  // Backend error message
   if (error.response?.data?.message) {
     return error.response.data.message;
   }
 
-  // HTTP status code fallbacks
   const status = error.response?.status;
   if (status === 404) {
     return 'Resource not found.';
@@ -46,13 +39,9 @@ export const getErrorMessage = (error: any): string => {
     return 'Service temporarily unavailable. Please try again later.';
   }
 
-  // Generic fallback
   return 'Something went wrong. Please try again.';
 };
 
-/**
- * Extracts field-level validation errors from API response
- */
 export const getFieldErrors = (error: any): Record<string, string[]> => {
   if (error.response?.data?.errors && typeof error.response.data.errors === 'object') {
     return error.response.data.errors as Record<string, string[]>;

@@ -46,17 +46,6 @@
   text-align: left;
 }
 
-.textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #DCE1E5;
-  border-radius: 6px;
-  font-size: 16px;
-  font-family: inherit;
-  resize: vertical;
-}
-
-.textarea:focus,
 .dateInput:focus,
 .select:focus {
   outline: none;
@@ -150,7 +139,6 @@
     font-size: 13px;
   }
 
-  .textarea,
   .dateInput,
   .select {
     font-size: 14px;

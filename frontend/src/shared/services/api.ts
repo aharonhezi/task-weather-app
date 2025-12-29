@@ -26,21 +26,17 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    // Handle 401 - Unauthorized (token expired or invalid)
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      // Add user-friendly message before redirect
       const message = getErrorMessage(error);
       if (message) {
-        // Store message to show on login page if needed
         sessionStorage.setItem('authError', message);
       }
       window.location.href = '/login';
       return Promise.reject(error);
     }
 
-    // Attach user-friendly message to error object for easy access
     (error as any).userMessage = getErrorMessage(error);
     
     return Promise.reject(error);

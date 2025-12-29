@@ -17,7 +17,6 @@
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #FFFFFF;
   margin: 0;
 }
 
@@ -42,8 +41,6 @@
   cursor: pointer;
   padding: 4px 8px;
   line-height: 1;
-  align-items: center;
-  justify-content: center;
 }
 
 .searchWrapper {
@@ -160,13 +157,10 @@
 
   .rightSection {
     gap: 8px;
-    justify-content: flex-end;
   }
 
   .hamburger {
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .searchInput {

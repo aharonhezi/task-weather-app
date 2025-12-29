@@ -66,10 +66,6 @@
     padding: 12px 8px;
   }
 
-  .taskRow td:first-child {
-    padding-left: 0;
-  }
-
   .taskRow td:last-child {
     padding-right: 0;
   }
@@ -107,10 +103,6 @@
 @media (max-width: 480px) {
   .taskRow td {
     padding: 10px 6px;
-  }
-
-  .taskRow td:first-child {
-    padding-left: 0;
   }
 
   .taskRow td:last-child {

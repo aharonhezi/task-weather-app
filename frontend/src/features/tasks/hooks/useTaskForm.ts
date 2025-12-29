@@ -34,17 +34,14 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
       setDueDate(task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '');
       setTag(task.tag || '');
     } else {
-      // Reset form when creating new task
       setTitle('');
       setDueDate('');
       setTag('');
     }
-    // Clear errors when task changes
     setError(null);
     setFieldErrors({});
   }, [task]);
 
-  // Clear field errors when user types
   useEffect(() => {
     if (fieldErrors.title && title) {
       setFieldErrors((prev) => {
