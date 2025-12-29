@@ -3,6 +3,7 @@ import { Task } from '../services/taskService';
 import { Checkbox } from '../../../shared/components/common/Checkbox';
 import { Tag } from '../../../shared/components/common/Tag';
 import { formatDate, getWeatherDisplay } from '../utils/taskUtils';
+import { WeatherDisplay } from './WeatherDisplay';
 import styles from './TaskCardMobile.module.css';
 
 interface TaskCardMobileProps {
@@ -14,7 +15,6 @@ interface TaskCardMobileProps {
 
 export const TaskCardMobile: React.FC<TaskCardMobileProps> = ({ task, onToggle, onEdit, onDelete }) => {
   const weatherNote = getWeatherDisplay(task);
-  const hasNote = weatherNote || task.note;
 
   return (
     <div className={styles.card}>
@@ -30,9 +30,13 @@ export const TaskCardMobile: React.FC<TaskCardMobileProps> = ({ task, onToggle, 
           {task.dueDate && (
             <div className={styles.dueDate}>{formatDate(task.dueDate)}</div>
           )}
-          {hasNote && (
+          {(weatherNote || task.note) && (
             <div className={styles.note}>
-              Note: {weatherNote || task.note}
+              Note: {weatherNote ? (
+                <WeatherDisplay icon={weatherNote.icon} temperature={weatherNote.temperature} />
+              ) : (
+                task.note
+              )}
             </div>
           )}
           {task.tag && (

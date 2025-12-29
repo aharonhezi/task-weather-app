@@ -3,6 +3,7 @@ import { Task } from '../services/taskService';
 import { Checkbox } from '../../../shared/components/common/Checkbox';
 import { Tag } from '../../../shared/components/common/Tag';
 import { formatDate, getWeatherDisplay } from '../utils/taskUtils';
+import { WeatherDisplay } from './WeatherDisplay';
 import styles from './TaskCard.module.css';
 
 interface TaskCardProps {
@@ -13,6 +14,8 @@ interface TaskCardProps {
 }
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onEdit, onDelete }) => {
+  const weather = getWeatherDisplay(task);
+  
   return (
     <tr className={styles.taskRow}>
       <td>
@@ -29,7 +32,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onEdit, onDe
         )}
       </td>
       <td className={styles.note}>
-        {getWeatherDisplay(task) || task.note || ''}
+        {weather ? (
+          <WeatherDisplay icon={weather.icon} temperature={weather.temperature} />
+        ) : (
+          task.note || ''
+        )}
       </td>
       <td className={styles.actions}>
         <button

@@ -13,7 +13,7 @@ interface WeatherAPIResponse {
     temp_f?: number;
     condition?: {
       text?: string;
-      icon?: string;
+      icon?: string; // Full URL from WeatherAPI.com
       code?: number;
     };
   };
@@ -40,14 +40,13 @@ export const fetchWeatherData = async (
       },
     });
 
+    const data = await response.json() as WeatherAPIResponse;
+
     if (!response.ok) {
       console.error(`WeatherAPI error: ${response.status} ${response.statusText}`);
-      const errorText = await response.text().catch(() => '');
-      console.error('Error details:', errorText);
+      console.error('Error details:', data);
       return null;
     }
-
-    const data = await response.json() as WeatherAPIResponse;
     
     const current = data.current;
     if (!current) {
@@ -55,14 +54,16 @@ export const fetchWeatherData = async (
       return null;
     }
 
+    // Use icon URL directly from WeatherAPI.com (always provided in response)
     const weatherData: WeatherData = {
       temperature: current.temp_c ?? current.temp_f ?? undefined,
       condition: current.condition?.text ?? undefined,
-      icon: current.condition?.icon ?? (current.condition?.code ? String(current.condition.code) : undefined),
+      icon: current.condition?.icon, // Full URL from WeatherAPI.com, no fallback needed
     };
 
     return weatherData;
   } catch (error) {
+    // For all errors, log and return null gracefully (graceful degradation)
     console.error('Error fetching weather data:', error);
     return null;
   }

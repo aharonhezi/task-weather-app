@@ -16,11 +16,14 @@ export const formatDate = (dateString: string | null | undefined): string => {
   }
 };
 
-export const getWeatherDisplay = (task: Task): string | null => {
+export const getWeatherDisplay = (task: Task): { temperature: number; icon?: string } | null => {
   if (!task.weatherData || !task.weatherCity) return null;
   const temp = task.weatherData.temperature;
   if (temp !== null && temp !== undefined) {
-    return `(* ${temp}°C)`;
+    return {
+      temperature: temp,
+      icon: task.weatherData.icon, // Icon URL from WeatherAPI.com
+    };
   }
   return null;
 };
