@@ -7,6 +7,7 @@ import { TaskForm } from '../features/tasks/components/TaskForm';
 import { TaskProvider, useTasks } from '../features/tasks/context/TaskContext';
 import { SnackbarProvider, useSnackbar } from '../shared/context/SnackbarContext';
 import { Task } from '../features/tasks/services/taskService';
+import { getErrorMessage } from '../shared/utils/errorMessages';
 import styles from './Dashboard.module.css';
 
 const DashboardContent: React.FC = () => {
@@ -17,6 +18,9 @@ const DashboardContent: React.FC = () => {
     updateTaskById,
     deleteTaskById,
     toggleTaskById,
+    isLoading,
+    error,
+    fetchTasks,
   } = useTasks();
   const { showSnackbar } = useSnackbar();
 
@@ -28,8 +32,9 @@ const DashboardContent: React.FC = () => {
       await addTask(data);
       setShowTaskForm(false);
       showSnackbar('Task created successfully!', 'success');
-    } catch (error) {
-      showSnackbar('Failed to create task', 'error');
+    } catch (error: any) {
+      const message = error.userMessage || getErrorMessage(error);
+      showSnackbar(message, 'error');
     }
   };
 
@@ -40,8 +45,9 @@ const DashboardContent: React.FC = () => {
         setEditingTask(null);
         setShowTaskForm(false);
         showSnackbar('Task updated successfully!', 'success');
-      } catch (error) {
-        showSnackbar('Failed to update task', 'error');
+      } catch (error: any) {
+        const message = error.userMessage || getErrorMessage(error);
+        showSnackbar(message, 'error');
       }
     }
   };
@@ -51,8 +57,9 @@ const DashboardContent: React.FC = () => {
       try {
         await deleteTaskById(id);
         showSnackbar('Task deleted successfully!', 'success');
-      } catch (error) {
-        showSnackbar('Failed to delete task', 'error');
+      } catch (error: any) {
+        const message = error.userMessage || getErrorMessage(error);
+        showSnackbar(message, 'error');
       }
     }
   };
@@ -61,8 +68,9 @@ const DashboardContent: React.FC = () => {
     try {
       await toggleTaskById(id);
       showSnackbar('Task status updated!', 'success');
-    } catch (error) {
-      showSnackbar('Failed to update task status', 'error');
+    } catch (error: any) {
+      const message = error.userMessage || getErrorMessage(error);
+      showSnackbar(message, 'error');
     }
   };
 
@@ -83,6 +91,19 @@ const DashboardContent: React.FC = () => {
             + Add task
           </Button>
         </div>
+
+        {error && (
+          <div className={styles.errorBanner}>
+            <span>{error}</span>
+            <Button
+              variant="secondary"
+              onClick={() => fetchTasks()}
+              style={{ marginLeft: '12px', padding: '6px 12px', fontSize: '14px' }}
+            >
+              Retry
+            </Button>
+          </div>
+        )}
 
         <div className={styles.sections}>
           <div className={styles.section}>

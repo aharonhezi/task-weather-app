@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Task } from '../services/taskService';
 import { Button } from '../../../shared/components/common/Button';
 import { Input } from '../../../shared/components/common/Input';
+import { getErrorMessage, getFieldErrors } from '../../../shared/utils/errorMessages';
 import styles from './TaskForm.module.css';
 
 interface TaskFormProps {
@@ -18,6 +19,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
   const [tag, setTag] = useState<string>('');
   const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
 
   useEffect(() => {
     if (task) {
@@ -25,12 +28,44 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
       setDueDate(task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '');
       setTag(task.tag || '');
       setNote(task.note || '');
+    } else {
+      // Reset form when creating new task
+      setTitle('');
+      setDueDate('');
+      setTag('');
+      setNote('');
     }
+    // Clear errors when task changes
+    setError(null);
+    setFieldErrors({});
   }, [task]);
+
+  // Clear field errors when user types
+  useEffect(() => {
+    if (fieldErrors.title && title) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors.title;
+        return newErrors;
+      });
+    }
+  }, [title, fieldErrors.title]);
+
+  useEffect(() => {
+    if (fieldErrors.note && note) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors.note;
+        return newErrors;
+      });
+    }
+  }, [note, fieldErrors.note]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
+    setFieldErrors({});
 
     try {
       await onSave({
@@ -39,6 +74,12 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
         tag: tag || null,
         note: note || null,
       });
+    } catch (err: any) {
+      const fieldErrs = getFieldErrors(err);
+      if (Object.keys(fieldErrs).length > 0) {
+        setFieldErrors(fieldErrs);
+      }
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -49,13 +90,22 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2 className={styles.title}>{task ? 'Edit Task' : 'Add Task'}</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <Input
-            label="Task Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            placeholder="Enter task title"
-          />
+          {error && !Object.keys(fieldErrors).length && (
+            <div className={styles.errorMessage}>{error}</div>
+          )}
+          
+          <div>
+            <Input
+              label="Task Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              placeholder="Enter task title"
+            />
+            {fieldErrors.title && (
+              <div className={styles.fieldError}>{fieldErrors.title[0]}</div>
+            )}
+          </div>
 
           <div className={styles.inputWrapper}>
             <label className={styles.label}>Due Date</label>
@@ -94,6 +144,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
               placeholder="Enter note (optional)"
               rows={2}
             />
+            {fieldErrors.note && (
+              <div className={styles.fieldError}>{fieldErrors.note[0]}</div>
+            )}
           </div>
 
           <div className={styles.actions}>

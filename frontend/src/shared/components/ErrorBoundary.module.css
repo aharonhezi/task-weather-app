@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.message {
+  margin-bottom: 24px;
+  color: #666;
+}
+
+.button {
+  padding: 10px 20px;
+  background: #00C495;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button:hover {
+  background: #00a67d;
+}
+

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Task, getTasks, createTask, updateTask, deleteTask, toggleTask, GetTasksParams } from '../services/taskService';
+import { getErrorMessage } from '../../../shared/utils/errorMessages';
 
 interface TaskContextType {
   tasks: Task[];
@@ -31,7 +32,8 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const fetchedTasks = await getTasks(params);
       setTasks(fetchedTasks);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to fetch tasks');
+      const message = err.userMessage || getErrorMessage(err);
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -45,8 +47,10 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const newTask = await createTask(data);
       setTasks((prev) => [...prev, newTask]);
+      setError(null); // Clear error on success
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create task');
+      const message = err.userMessage || getErrorMessage(err);
+      setError(message);
       throw err;
     }
   };
@@ -55,8 +59,10 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const updatedTask = await updateTask(id, data);
       setTasks((prev) => prev.map((task) => (task.id === id ? updatedTask : task)));
+      setError(null); // Clear error on success
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to update task');
+      const message = err.userMessage || getErrorMessage(err);
+      setError(message);
       throw err;
     }
   };
@@ -65,8 +71,10 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       await deleteTask(id);
       setTasks((prev) => prev.filter((task) => task.id !== id));
+      setError(null); // Clear error on success
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to delete task');
+      const message = err.userMessage || getErrorMessage(err);
+      setError(message);
       throw err;
     }
   };
@@ -75,8 +83,10 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const updatedTask = await toggleTask(id);
       setTasks((prev) => prev.map((task) => (task.id === id ? updatedTask : task)));
+      setError(null); // Clear error on success
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to toggle task');
+      const message = err.userMessage || getErrorMessage(err);
+      setError(message);
       throw err;
     }
   };
