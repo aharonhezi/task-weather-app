@@ -1,4 +1,4 @@
-# Careology - Task Management Application
+# Task Management Application
 
 A full-stack task management application built with React, Express, TypeScript, and PostgreSQL.
 
