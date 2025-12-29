@@ -9,7 +9,7 @@ interface TaskContextType {
   isLoading: boolean;
   error: string | null;
   fetchTasks: (params?: GetTasksParams) => Promise<void>;
-  addTask: (data: Omit<Task, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'order'>) => Promise<void>;
+  addTask: (data: Omit<Task, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateTaskById: (id: string, data: Partial<Task>) => Promise<void>;
   deleteTaskById: (id: string) => Promise<void>;
   toggleTaskById: (id: string) => Promise<void>;

@@ -18,7 +18,6 @@ export interface Task {
   note?: string | null;
   weatherCity?: string | null;
   weatherData?: any | null;
-  order: number;
   createdAt: Date;
   updatedAt: Date;
 }
