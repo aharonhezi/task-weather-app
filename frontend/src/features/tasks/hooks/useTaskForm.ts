@@ -11,14 +11,12 @@ interface UseTaskFormReturn {
   title: string;
   dueDate: string;
   tag: string;
-  note: string;
   isLoading: boolean;
   error: string | null;
   fieldErrors: Record<string, string[]>;
   setTitle: (value: string) => void;
   setDueDate: (value: string) => void;
   setTag: (value: string) => void;
-  setNote: (value: string) => void;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
@@ -26,7 +24,6 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
   const [title, setTitle] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [tag, setTag] = useState<string>('');
-  const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
@@ -36,13 +33,11 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
       setTitle(task.title);
       setDueDate(task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '');
       setTag(task.tag || '');
-      setNote(task.note || '');
     } else {
       // Reset form when creating new task
       setTitle('');
       setDueDate('');
       setTag('');
-      setNote('');
     }
     // Clear errors when task changes
     setError(null);
@@ -60,16 +55,6 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
     }
   }, [title, fieldErrors.title]);
 
-  useEffect(() => {
-    if (fieldErrors.note && note) {
-      setFieldErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors.note;
-        return newErrors;
-      });
-    }
-  }, [note, fieldErrors.note]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -81,7 +66,6 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
         title,
         dueDate: dueDate ? new Date(dueDate).toISOString() : null,
         tag: tag || null,
-        note: note || null,
       });
     } catch (err: any) {
       const fieldErrs = getFieldErrors(err);
@@ -98,14 +82,12 @@ export const useTaskForm = ({ task, onSave }: UseTaskFormProps): UseTaskFormRetu
     title,
     dueDate,
     tag,
-    note,
     isLoading,
     error,
     fieldErrors,
     setTitle,
     setDueDate,
     setTag,
-    setNote,
     handleSubmit,
   };
 };

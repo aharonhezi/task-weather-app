@@ -71,7 +71,7 @@ const DashboardContent: React.FC = () => {
                     <th>☰ Task name</th>
                     <th>📅 Due date</th>
                     <th>🏷️ Tag</th>
-                    <th>☰ Note</th>
+                    <th>🌤️ Weather</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -125,7 +125,7 @@ const DashboardContent: React.FC = () => {
                     <th>☰ Task name</th>
                     <th>📅 Due date</th>
                     <th>🏷️ Tag</th>
-                    <th>☰ Note</th>
+                    <th>🌤️ Weather</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

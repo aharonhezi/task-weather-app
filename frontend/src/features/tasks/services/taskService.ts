@@ -18,14 +18,12 @@ export interface CreateTaskData {
   title: string;
   dueDate?: string | null;
   tag?: string | null;
-  note?: string | null;
 }
 
 export interface UpdateTaskData {
   title?: string;
   dueDate?: string | null;
   tag?: string | null;
-  note?: string | null;
 }
 
 export interface GetTasksParams {

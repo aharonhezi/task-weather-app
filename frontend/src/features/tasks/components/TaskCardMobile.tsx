@@ -30,13 +30,9 @@ export const TaskCardMobile: React.FC<TaskCardMobileProps> = ({ task, onToggle, 
           {task.dueDate && (
             <div className={styles.dueDate}>{formatDate(task.dueDate)}</div>
           )}
-          {(weatherNote || task.note) && (
+          {weatherNote && (
             <div className={styles.note}>
-              Note: {weatherNote ? (
-                <WeatherDisplay icon={weatherNote.icon} temperature={weatherNote.temperature} />
-              ) : (
-                task.note
-              )}
+              <WeatherDisplay icon={weatherNote.icon} temperature={weatherNote.temperature} />
             </div>
           )}
           {task.tag && (

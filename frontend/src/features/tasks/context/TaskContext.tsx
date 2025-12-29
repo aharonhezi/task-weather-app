@@ -97,16 +97,14 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const filteredTasksToDo = searchQuery
     ? tasksToDo.filter(
         (task) =>
-          task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          task.note?.toLowerCase().includes(searchQuery.toLowerCase())
+          task.title.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : tasksToDo;
 
   const filteredTasksDone = searchQuery
     ? tasksDone.filter(
         (task) =>
-          task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          task.note?.toLowerCase().includes(searchQuery.toLowerCase())
+          task.title.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : tasksDone;
 

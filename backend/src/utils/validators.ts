@@ -16,7 +16,6 @@ export const taskSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200, 'Title must be less than 200 characters'),
   dueDate: z.string().datetime().optional().nullable(),
   tag: z.enum(['Low', 'Medium', 'High', 'Not urgent', 'Urgent']).optional().nullable(),
-  note: z.string().max(500, 'Note must be less than 500 characters').optional().nullable(),
 });
 
 export const updateTaskSchema = taskSchema.partial().extend({

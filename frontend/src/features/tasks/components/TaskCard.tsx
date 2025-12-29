@@ -32,10 +32,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onEdit, onDe
         )}
       </td>
       <td className={styles.note}>
-        {weather ? (
+        {weather && (
           <WeatherDisplay icon={weather.icon} temperature={weather.temperature} />
-        ) : (
-          task.note || ''
         )}
       </td>
       <td className={styles.actions}>

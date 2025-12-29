@@ -10,23 +10,19 @@ export interface CreateTaskData {
   title: string;
   dueDate?: Date | null;
   tag?: string | null;
-  note?: string | null;
 }
 
 export interface UpdateTaskData {
   title?: string;
   dueDate?: Date | null;
   tag?: string | null;
-  note?: string | null;
 }
 
-const processTaskWeather = async (title: string, note?: string | null): Promise<{
+const processTaskWeather = async (title: string): Promise<{
   weatherCity: string | null;
   weatherData: WeatherData | null;
 }> => {
-  const taskText = `${title} ${note || ''}`.trim();
-  
-  const geocodingResult = await detectCity(taskText);
+  const geocodingResult = await detectCity(title);
   
   if (!geocodingResult || !geocodingResult.city) {
     return { weatherCity: null, weatherData: null };
@@ -69,7 +65,7 @@ export const createTask = async (
   userId: string,
   data: CreateTaskData
 ): Promise<Task> => {
-  const { weatherCity, weatherData } = await processTaskWeather(data.title, data.note);
+  const { weatherCity, weatherData } = await processTaskWeather(data.title);
 
   return prisma.task.create({
     data: {
@@ -91,13 +87,9 @@ export const updateTask = async (
   let weatherCity = existingTask.weatherCity;
   let weatherData: Prisma.InputJsonValue | typeof Prisma.JsonNull | undefined = existingTask.weatherData as Prisma.InputJsonValue;
 
-  if (data.title || data.note !== undefined) {
-    const newTitle = data.title || existingTask.title;
-    const newNote = data.note !== undefined ? data.note : existingTask.note;
-    const { weatherCity: detectedCity, weatherData: fetchedWeather } = await processTaskWeather(
-      newTitle,
-      newNote
-    );
+  if (data.title) {
+    const newTitle = data.title;
+    const { weatherCity: detectedCity, weatherData: fetchedWeather } = await processTaskWeather(newTitle);
     
     weatherCity = detectedCity;
     weatherData = fetchedWeather ? (fetchedWeather as Prisma.InputJsonValue) : Prisma.JsonNull;

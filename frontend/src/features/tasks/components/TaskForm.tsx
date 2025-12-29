@@ -18,14 +18,12 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
     title,
     dueDate,
     tag,
-    note,
     isLoading,
     error,
     fieldErrors,
     setTitle,
     setDueDate,
     setTag,
-    setNote,
     handleSubmit,
   } = useTaskForm({ task, onSave });
 
@@ -77,20 +75,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onCancel }) =>
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className={styles.inputWrapper}>
-            <label className={styles.label}>Note</label>
-            <textarea
-              className={styles.textarea}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Enter note (optional)"
-              rows={2}
-            />
-            {fieldErrors.note && (
-              <div className={styles.fieldError}>{fieldErrors.note[0]}</div>
-            )}
           </div>
 
           <div className={styles.actions}>
