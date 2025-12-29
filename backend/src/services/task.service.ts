@@ -40,33 +40,9 @@ const processTaskWeather = async (title: string, note?: string | null): Promise<
   };
 };
 
-export const getTasks = async (
-  userId: string,
-  options?: {
-    search?: string;
-    isCompleted?: boolean;
-    tag?: string;
-  }
-): Promise<Task[]> => {
-  const where: any = { userId };
-
-  if (options?.isCompleted !== undefined) {
-    where.isCompleted = options.isCompleted;
-  }
-
-  if (options?.tag) {
-    where.tag = options.tag;
-  }
-
-  if (options?.search) {
-    where.OR = [
-      { title: { contains: options.search, mode: 'insensitive' } },
-      { note: { contains: options.search, mode: 'insensitive' } },
-    ];
-  }
-
+export const getTasks = async (userId: string): Promise<Task[]> => {
   return prisma.task.findMany({
-    where,
+    where: { userId },
     orderBy: {
       createdAt: 'desc',
     },

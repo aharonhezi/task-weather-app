@@ -12,13 +12,8 @@ import { AuthRequest } from '../types';
 
 export const getAllTasks = async (req: AuthRequest, res: Response) => {
   const userId = req.user!.id;
-  const { search, isCompleted, tag } = req.query;
 
-  const tasks = await getTasks(userId, {
-    search: search as string | undefined,
-    isCompleted: isCompleted === 'true' ? true : isCompleted === 'false' ? false : undefined,
-    tag: tag as string | undefined,
-  });
+  const tasks = await getTasks(userId);
 
   res.json({
     success: true,
